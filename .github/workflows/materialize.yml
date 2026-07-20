@@ -1,11 +1,9 @@
 name: Materialize candidate campaign
 
 on:
-  push:
+  pull_request:
     branches: [main]
-    paths:
-      - 'bundle/**'
-      - '.github/workflows/materialize.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,6 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
       - name: Assemble verified campaign source
         shell: bash
@@ -30,6 +29,8 @@ jobs:
           test -f resume.html
           test -f cover-letter.html
           test -f .github/workflows/publish.yml
+          test "$(pdfinfo docs/Russell-Dudek-Axial-Fractional-CAIO-Resume.pdf | awk '/^Pages:/{print $2}')" = "2"
+          test "$(pdfinfo docs/Russell-Dudek-Axial-Fractional-CAIO-Cover-Letter.pdf | awk '/^Pages:/{print $2}')" = "1"
       - name: Commit complete candidate campaign
         shell: bash
         run: |
@@ -38,4 +39,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "Publish complete Axial candidate campaign"
-          git push
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
