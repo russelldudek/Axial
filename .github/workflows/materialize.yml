@@ -16,15 +16,25 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
-      - name: Assemble verified campaign source
+      - name: Decode staged archive
         shell: bash
         run: |
           set -euo pipefail
           cat bundle/part-* > /tmp/axial-campaign.b64
           base64 --decode /tmp/axial-campaign.b64 > /tmp/axial-campaign.tar.xz
-          xz --test /tmp/axial-campaign.tar.xz
+      - name: Verify compressed archive
+        shell: bash
+        run: xz --test /tmp/axial-campaign.tar.xz
+      - name: Extract campaign source
+        shell: bash
+        run: |
+          set -euo pipefail
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           tar -xJf /tmp/axial-campaign.tar.xz -C .
+      - name: Verify required artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
           test -f index.html
           test -f resume.html
           test -f cover-letter.html
