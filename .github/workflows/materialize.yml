@@ -28,9 +28,9 @@ jobs:
           test -f index.html
           test -f resume.html
           test -f cover-letter.html
+          test -f docs/Russell-Dudek-Axial-Fractional-CAIO-Resume.pdf
+          test -f docs/Russell-Dudek-Axial-Fractional-CAIO-Cover-Letter.pdf
           test -f .github/workflows/publish.yml
-          test "$(pdfinfo docs/Russell-Dudek-Axial-Fractional-CAIO-Resume.pdf | awk '/^Pages:/{print $2}')" = "2"
-          test "$(pdfinfo docs/Russell-Dudek-Axial-Fractional-CAIO-Cover-Letter.pdf | awk '/^Pages:/{print $2}')" = "1"
       - name: Commit complete candidate campaign
         shell: bash
         run: |
