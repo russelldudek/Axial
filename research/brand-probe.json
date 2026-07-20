@@ -1,0 +1,152 @@
+{
+  "official_page": "https://axialsearch.com/",
+  "official_logo": "https://axialsearch.com/images/axial-logo.svg",
+  "stylesheets": [
+    "https://axialsearch.com/_next/static/chunks/0x9c-nppjm221.css",
+    "https://axialsearch.com/_next/static/chunks/0l2zr208pvf-w.css",
+    "https://axialsearch.com/_next/static/chunks/412_jetlqdjj9.css",
+    "https://axialsearch.com/_next/static/chunks/3qsxwg1ho3w_o.css"
+  ],
+  "frequent_css_colors": [
+    [
+      "#0000",
+      44
+    ],
+    [
+      "#fff",
+      18
+    ],
+    [
+      "#0000001a",
+      18
+    ],
+    [
+      "#18b26f",
+      16
+    ],
+    [
+      "#000",
+      14
+    ],
+    [
+      "#0a151224",
+      11
+    ],
+    [
+      "#46e3a8",
+      8
+    ],
+    [
+      "#0a151229",
+      8
+    ],
+    [
+      "#e5e7eb",
+      7
+    ],
+    [
+      "#f5fafd42",
+      7
+    ],
+    [
+      "#27272a",
+      6
+    ],
+    [
+      "#18181b",
+      6
+    ],
+    [
+      "#101828",
+      6
+    ],
+    [
+      "#f5fafd1f",
+      6
+    ],
+    [
+      "#364153",
+      5
+    ],
+    [
+      "#fafafa",
+      5
+    ],
+    [
+      "#fff3",
+      5
+    ],
+    [
+      "#9ca3af",
+      5
+    ],
+    [
+      "#46e3a880",
+      5
+    ],
+    [
+      "#0a15120d",
+      5
+    ],
+    [
+      "#fbfdfe",
+      5
+    ],
+    [
+      "#ecfdf5",
+      4
+    ],
+    [
+      "#f4f4f5",
+      4
+    ],
+    [
+      "#fbe12e",
+      4
+    ],
+    [
+      "#1c1c1c",
+      4
+    ],
+    [
+      "#4eeaab",
+      4
+    ],
+    [
+      "#e0e0e0",
+      4
+    ],
+    [
+      "#d1d5dc",
+      4
+    ],
+    [
+      "#ffffff1a",
+      4
+    ],
+    [
+      "#b7e9b0",
+      4
+    ]
+  ],
+  "declared_font_families": [
+    "var(--font-sans)",
+    "var(--font-mono)",
+    "var(--default-font-family,ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\")",
+    "var(--default-mono-font-family,ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace)",
+    "inherit",
+    "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif",
+    "var(--font-body)",
+    "var(--font-display)",
+    "var(--font-body,system-ui, sans-serif)",
+    "Space Grotesk",
+    "Space Grotesk Fallback",
+    "Space Grotesk,Space Grotesk Fallback",
+    "IBM Plex Sans",
+    "IBM Plex Sans Fallback",
+    "IBM Plex Sans,IBM Plex Sans Fallback",
+    "IBM Plex Mono",
+    "IBM Plex Mono Fallback",
+    "IBM Plex Mono,IBM Plex Mono Fallback"
+  ]
+}
