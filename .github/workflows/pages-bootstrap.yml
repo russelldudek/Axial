@@ -9,6 +9,8 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  pull-requests: write
+  issues: write
 
 concurrency:
   group: pages-bootstrap
@@ -39,3 +41,14 @@ jobs:
           path: .
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Report deployment URL
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          if [ -n "$PAGE_URL" ]; then
+            gh pr comment "${{ github.event.pull_request.number }}" --body "PAGES_DEPLOYMENT_URL=$PAGE_URL"
+          else
+            gh pr comment "${{ github.event.pull_request.number }}" --body "PAGES_DEPLOYMENT_FAILED_AFTER_VERIFICATION"
+          fi
