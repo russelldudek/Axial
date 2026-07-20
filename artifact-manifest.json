@@ -1,0 +1,30 @@
+{
+  "campaign": "Axial Search - Fractional Chief AI Officer",
+  "candidate": "Russell Dudek",
+  "routes": [
+    "index.html",
+    "resume.html",
+    "cover-letter.html",
+    "interview-brief.html",
+    "120-day-plan.html",
+    "mandate-charter.html",
+    "fit-analysis.html"
+  ],
+  "source_files": [
+    "styles.css",
+    "brand-tokens.css",
+    "app.js",
+    "brand-intelligence.md",
+    "campaign-audit.md",
+    "README.md",
+    "assets/brand/axial-logo.svg"
+  ],
+  "pdfs": [
+    "docs/Russell-Dudek-Axial-Fractional-CAIO-Resume.pdf",
+    "docs/Russell-Dudek-Axial-Fractional-CAIO-Cover-Letter.pdf",
+    "docs/Russell-Dudek-Axial-Interview-Thesis-Brief.pdf",
+    "docs/Russell-Dudek-Axial-120-Day-Entry-Plan.pdf",
+    "docs/Russell-Dudek-Fractional-AI-Mandate-Charter.pdf",
+    "docs/Russell-Dudek-Axial-Fractional-CAIO-Fit-Analysis.pdf"
+  ]
+}

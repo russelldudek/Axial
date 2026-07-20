@@ -1,0 +1,22 @@
+:root {
+  --axial-ink: #0a1512;
+  --axial-ink-soft: #12231e;
+  --axial-mint: #46e3a8;
+  --axial-green: #18b26f;
+  --axial-line: #3bedb7;
+  --axial-yellow: #fbe12e;
+  --axial-pale: #f5fafd;
+  --axial-white: #ffffff;
+  --axial-zinc: #27272a;
+  --axial-muted: #65736e;
+  --axial-border: #dce8e3;
+  --axial-soft: #edf8f3;
+  --candidate-warm: #e36f4a;
+  --font-display: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", Consolas, monospace;
+  --shadow-soft: 0 24px 70px rgba(10, 21, 18, 0.13);
+  --radius-sm: 10px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+}
