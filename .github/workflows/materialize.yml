@@ -23,15 +23,14 @@ jobs:
           cat bundle/part-* > /tmp/axial-campaign.b64
           base64 --decode /tmp/axial-campaign.b64 > /tmp/axial-campaign.tar.xz
           xz --test /tmp/axial-campaign.tar.xz
-      - name: Extract campaign source and retain this workflow
+      - name: Extract campaign source and retain workflows
         shell: bash
         run: |
           set -euo pipefail
-          cp .github/workflows/materialize.yml /tmp/materialize.yml
+          cp -R .github /tmp/existing-github
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           tar -xJf /tmp/axial-campaign.tar.xz -C .
-          mkdir -p .github/workflows
-          cp /tmp/materialize.yml .github/workflows/materialize.yml
+          cp -R /tmp/existing-github .github
       - name: Standardize deterministic print renderer
         shell: bash
         run: |
