@@ -119,8 +119,7 @@ jobs:
                 - id: deployment
                   uses: actions/deploy-pages@v4
           YAML
-      - name: Create detached verified commit
-        id: detached
+      - name: Upload verified blobs and report manifest
         env:
           GITHUB_TOKEN: ${{ github.token }}
         shell: bash
@@ -130,13 +129,11 @@ jobs:
           import json
           import os
           from pathlib import Path
-          from urllib.error import HTTPError
           from urllib.request import Request, urlopen
 
           root = Path('.')
           repo = os.environ['GITHUB_REPOSITORY']
           token = os.environ['GITHUB_TOKEN']
-          result_path = Path('/tmp/materialize-result.txt')
 
           def api(path, payload):
               req = Request(
@@ -153,46 +150,27 @@ jobs:
               with urlopen(req, timeout=120) as response:
                   return json.load(response)
 
-          try:
-              entries = []
-              for file in sorted(root.rglob('*')):
-                  if not file.is_file() or '.git' in file.parts:
-                      continue
-                  data = file.read_bytes()
-                  blob = api('/git/blobs', {
-                      'content': base64.b64encode(data).decode('ascii'),
-                      'encoding': 'base64',
-                  })
-                  entries.append({
-                      'path': file.as_posix(),
-                      'mode': '100755' if os.access(file, os.X_OK) else '100644',
-                      'type': 'blob',
-                      'sha': blob['sha'],
-                  })
-
-              tree = api('/git/trees', {'tree': entries})
-              commit = api('/git/commits', {
-                  'message': 'Publish complete Axial candidate campaign',
-                  'tree': tree['sha'],
-                  'parents': [os.environ['GITHUB_SHA']],
+          entries = []
+          for file in sorted(root.rglob('*')):
+              if not file.is_file() or '.git' in file.parts:
+                  continue
+              blob = api('/git/blobs', {
+                  'content': base64.b64encode(file.read_bytes()).decode('ascii'),
+                  'encoding': 'base64',
               })
-              sha = commit['sha']
-              result_path.write_text(f'MATERIALIZED_COMMIT_SHA={sha}\n', encoding='utf-8')
-              with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
-                  out.write(f'sha={sha}\n')
-          except HTTPError as exc:
-              detail = exc.read().decode('utf-8', 'replace')
-              result_path.write_text(f'MATERIALIZATION_API_ERROR={exc.code}\n```json\n{detail}\n```\n', encoding='utf-8')
-              with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
-                  out.write('sha=\n')
-          except Exception as exc:
-              result_path.write_text(f'MATERIALIZATION_ERROR={type(exc).__name__}: {exc}\n', encoding='utf-8')
-              with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
-                  out.write('sha=\n')
+              entries.append({
+                  'path': file.as_posix(),
+                  'mode': '100755' if os.access(file, os.X_OK) else '100644',
+                  'type': 'blob',
+                  'sha': blob['sha'],
+              })
+
+          Path('/tmp/materialize-result.txt').write_text(
+              'MATERIALIZED_TREE_ENTRIES\n```json\n' + json.dumps(entries, separators=(',', ':')) + '\n```\n',
+              encoding='utf-8',
+          )
           PY
-      - name: Report materialization result
+      - name: Report verified blob manifest
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/materialize-result.txt
-      - name: Require detached commit
-        run: test -n "${{ steps.detached.outputs.sha }}"
