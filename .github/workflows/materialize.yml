@@ -23,7 +23,6 @@ jobs:
           cat bundle/part-* > /tmp/axial-campaign.b64
           base64 --decode /tmp/axial-campaign.b64 > /tmp/axial-campaign.tar.xz
       - name: Verify compressed archive
-        shell: bash
         run: xz --test /tmp/axial-campaign.tar.xz
       - name: Extract campaign source
         shell: bash
@@ -31,9 +30,6 @@ jobs:
           set -euo pipefail
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           tar -xJf /tmp/axial-campaign.tar.xz -C .
-          test -f index.html
-          test -f scripts/render_campaign.py
-          test -f scripts/verify_campaign.py
       - name: Set up Chrome
         id: chrome
         uses: browser-actions/setup-chrome@v1
@@ -51,6 +47,18 @@ jobs:
         env:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
         run: python scripts/render_campaign.py --chrome "$CHROME_PATH" --no-screenshots
+      - name: Resume is exactly two pages
+        run: python -c "from pypdf import PdfReader; assert len(PdfReader('docs/Russell-Dudek-Axial-Fractional-CAIO-Resume.pdf').pages)==2"
+      - name: Cover letter is exactly one page
+        run: python -c "from pypdf import PdfReader; assert len(PdfReader('docs/Russell-Dudek-Axial-Fractional-CAIO-Cover-Letter.pdf').pages)==1"
+      - name: Interview thesis is exactly four pages
+        run: python -c "from pypdf import PdfReader; assert len(PdfReader('docs/Russell-Dudek-Axial-Interview-Thesis-Brief.pdf').pages)==4"
+      - name: Entry plan is exactly three pages
+        run: python -c "from pypdf import PdfReader; assert len(PdfReader('docs/Russell-Dudek-Axial-120-Day-Entry-Plan.pdf').pages)==3"
+      - name: Mandate charter is exactly two pages
+        run: python -c "from pypdf import PdfReader; assert len(PdfReader('docs/Russell-Dudek-Fractional-AI-Mandate-Charter.pdf').pages)==2"
+      - name: Fit analysis is exactly two pages
+        run: python -c "from pypdf import PdfReader; assert len(PdfReader('docs/Russell-Dudek-Axial-Fractional-CAIO-Fit-Analysis.pdf').pages)==2"
       - name: Verify complete campaign
         run: python scripts/verify_campaign.py
       - name: Commit complete candidate campaign
