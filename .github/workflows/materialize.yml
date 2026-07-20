@@ -32,6 +32,7 @@ jobs:
       - name: Standardize deterministic print renderer
         shell: bash
         run: |
+          sed -i '1{/fonts.googleapis.com/d;}' styles.css
           cat > scripts/render_campaign.py <<'PY'
           from pathlib import Path
           from weasyprint import HTML
